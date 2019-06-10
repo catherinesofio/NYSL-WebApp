@@ -1,0 +1,29 @@
+{
+    "pages": [
+      {
+        "id": 0,
+        "name": "splash",
+        "data": ""
+      },
+      {
+        "id": 1,
+        "name": "games",
+        "data": "games.json"
+      },
+      {
+        "id": 2,
+        "name": "event",
+        "data": ""
+      },
+      {
+        "id": 3,
+        "name": "teams",
+        "data": "teams.json"
+      },
+      {
+        "id": 4,
+        "name": "locations",
+        "data": "locations.json"
+      }
+    ]
+  }
