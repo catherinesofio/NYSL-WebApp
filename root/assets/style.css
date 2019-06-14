@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+
+:root {
+    --logo-img: url("http://www.pngpix.com/wp-content/uploads/2016/10/PNGPIX-COM-Football-Vector-PNG-Transparent-Image-500x500.png");
+    --background-pattern: url("background_pattern.png");
+    --symbol-soccer-ball: "\26BD";
+    --main-color: ghostwhite;
+    --details-color-a: yellowgreen;
+    --details-color-b: green;
+    --nav-gradient: linear-gradient(to bottom, yellowgreen, forestgreen);
+    --text-color: ghostwhite;
+    --page-padding: 2em;
+    --h1-color: black;
+    --h1-size: 2em;
+    --h2-size: 1em;
+    --p-size: 0.85em;
+    --button-color: yellowgreen;;
+    --text-shadow: 0em 0.10em 0.5em rgba(0, 0, 0, 0.25);
+    --box-shadow: 0em 0em 0.25em rgba(0, 0, 0, 0.5);
+    --z-index-top: 3;
+    --z-index-middle: 2;
+    --z-index-back: 1;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Roboto Slab', serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: var(--nav-gradient);
+}
+
+#pattern {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-image: var(--background-pattern);
+    background-repeat: repeat;
+    background-size: 4em;
+    opacity: 0.15;
+    z-index: var(--z-index-back);
+}
+
+nav {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    text-align: center;
+    background-color: var(--main-color);
+    color: var(--text-color);
+    z-index: 10;
+    text-shadow: var(--text-shadow);
+    border-width: 0em;
+    border-bottom-width: 0.25em;
+    border-style: solid;
+    border-color: var(--details-color-b);
+    box-shadow: var(--box-shadow);
+}
+
+nav h1::before {
+    content: var(--symbol-soccer-ball);
+}
+
+nav li {
+    list-style: none;
+}
+
+nav a {
+    font-size: var(--h1-size);
+    color: var(--button-color);
+    text-decoration: none;
+}
+
+h1 {
+    text-align: center;
+    color: var(--h1-color);
+    font-size: var(--h1-size);
+    text-shadow: var(--h1-color);
+}
+
+h2 {
+    font-size: var(--h2-size);
+}
+
+p {
+    font-size: var(--p-size);
+}
+
+article {
+    margin-top: 5em;
+}
+
+article * {
+    width: 100%;
+    z-index: var(--z-index-middle);
+}
+
+div, img, iframe {
+    height: inherit;
+}
+
+div {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+img, iframe {
+    width: inherit;
+}
+
+iframe {
+    height: 100%;
+}
+
+h2 {
+    position: relative;
+    margin: 0%;
+    padding: 0%;
+    width: inherit;
+    background-color: var(--main-color);
+    text-align: start;
+}
+
+button {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+button:focus {
+    outline: none;
+}
+
+#app {
+    box-sizing: border-box;
+    padding: var(--page-padding);
+    text-align: center;
+}
+
+.cn-button {
+    box-sizing: border-box;
+    display: block;
+    width: 50vmin;
+    height: 50vmin;
+    margin: auto;
+    text-align: center;
+    background-image: var(--logo-img);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    z-index: var(--z-index-middle);
+}
+
+.cn-button:hover {
+    width: 49.5vmin;
+    height: 49.5vmin;
+}
+
+.align-vertical {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.align-horizontal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.align-horizontal p, .align-vertical p {
+    align-self: flex-start;
+}
+
+footer {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    margin: 0em;
+    padding: 0.1em;
+    position: fixed;
+    bottom: 0;
+    background-color: var(--main-color);
+    border-width: 0em;
+    border-top-width: 0.25em;
+    border-style: solid;
+    border-color: var(--details-color-a);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    z-index: var(--z-index-top);
+  }
