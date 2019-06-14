@@ -1,5 +1,8 @@
 var data = {
-	"template": "<section class='align-horizontal' v-for='event in data'><button class='btn-schedule'></button><div class='align-vertical'><h2>{{ event.team_a_id + ' vs ' + event.team_b_id }}</h2><p>{{ event.description }}</p></div><button class='btn-expand'></button></section>",
+	"template": [
+		"<nav class='align-horizontal'>GAMES</nav><a href='index.html'>X</a><section class='align-horizontal' v-for='event in data'><button class='btn-schedule'></button><div class='align-vertical'><h2>{{ event.team_a_id + ' vs ' + event.team_b_id }}</h2><p>{{ event.description }}</p></div><button class='btn-expand'></button></section>",
+		"<nav class='align-horizontal'>{{ title }}</nav><a>X</a><section class='align-horizontal></section>"
+	],
 	"data": [{
 			"team_a_id": 1,
 			"team_b_id": 3,
