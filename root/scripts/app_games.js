@@ -1,29 +1,46 @@
 function initApp() {
-  document.getElementById('app').innerHTML += data.template[0];
+  let temp = data;
 
+  let gamesComponent = Vue.component('gamesComp', { 
+    props: ['title', 'events'],
+    template: data.templates[0]
+  });
+  
+  let eventComponent = Vue.component('eventComp', {
+    props: ['title', 'currEvent'],
+    template: data.templates[1]
+  });
+  
   let app = new Vue(
     {
       el: "#app",
-      data: data,
-      title: "",
+      data: {
+        title: "GAMES",
+        events: temp.data,
+        currEvent: null
+      },
       methods: {
-        changeToGames() {
-          document.getElementById('app').innerHTML = data.template[0];
+        scheduleEvent: function (event, e) {
+          let value = !event.isScheduled;
+          event.isScheduled = value;
+          e.target.style.backgroundColor = 'var(--btn-color-' + value + ')';
         },
-        changeToEvent(id) {
-          this.changeTitle(data[id]);
-          document.getElementById('app').innerHTML = data.template[1];
+        changeToGames: function () {
+          this.title = "GAMES";
         },
-        changeTitle (ev) {
-          title = ev.team_a_id + " vs " + ev.team_b_id;
+        changeToEvent: function (ev) {
+          this.currEvent = ev;
+          this.title = currEvent.team_a_id + " vs " + currEvent.team_b_id;
         }
+      },
+      components: {
+        'gamesComp': gamesComponent,
+        'eventComp': eventComponent
       }
     }
   );
 
-  //Agregar eventos
-  // - Boton Schedule
-  // - Boton Open
+  app.changeToGames();
 }
 
 $(document).ready(initApp);

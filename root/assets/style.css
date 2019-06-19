@@ -9,12 +9,14 @@
     --details-color-b: green;
     --nav-gradient: linear-gradient(to bottom, yellowgreen, forestgreen);
     --text-color: ghostwhite;
-    --page-padding: 2em;
+    --page-padding: 0;
     --h1-color: black;
     --h1-size: 2em;
     --h2-size: 1em;
     --p-size: 0.85em;
     --button-color: yellowgreen;;
+    --btn-color-true: yellow;
+    --btn-color-false: grey;
     --text-shadow: 0em 0.10em 0.5em rgba(0, 0, 0, 0.25);
     --box-shadow: 0em 0em 0.25em rgba(0, 0, 0, 0.5);
     --z-index-top: 3;
@@ -94,10 +96,6 @@ p {
     font-size: var(--p-size);
 }
 
-article {
-    margin-top: 5em;
-}
-
 article * {
     width: 100%;
     z-index: var(--z-index-middle);
@@ -133,6 +131,7 @@ h2 {
 button {
     width: 1.5em;
     height: 1.5em;
+    z-index: var(--z-index-middle);
 }
 
 button:focus {
