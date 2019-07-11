@@ -1,27 +1,28 @@
 <template>
   <section>
-    <div class="container-m">
-      <div class="container-4">
+    <div class="container">
+      <div class="container-full">
         <div class="container-title">
-          <h2>{{ getMascotNav }}</h2>
+          <h2>{{ mascotsTitle }}</h2>
         </div>
-        <p>{{ getEvent().description }}</p>
+        <p>{{ eventDescription }}</p>
       </div>
     </div>
     <div class="container-transition">
       <button class="btn-map-e" v-on:click="showMap()">🗺️</button>
-      <h2>{{ getLocationTitle }}</h2>
+      <h2>{{ locationTitle }}</h2>
     </div>
-    <div class="container-s">
-      <div class="container-3">
-        <img class="fit" v-bind:src="getLocationImg" v-bind:alt="getLocationAddress" />
+    <div class="container">
+      <div class="container-half">
+        <img v-bind:src="locationImg" v-bind:alt="locationAddress" />
       </div>
-      <ul class="container-3">
-        <li><p>{{ getDate }}</p></li>
-        <li><p>{{ getTime }}</p></li>
+      <ul class="container-half">
+        <li><p>{{ date }}</p></li>
+        <li><p>{{ time }}</p></li>
+        <li><p>{{ locationAddress }}</p></li>
       </ul>
     </div>
-    <Map v-bind:url="getLocationMap" />
+    <Map v-bind:url="locationMap" />
   </section>
 </template>
 
@@ -35,7 +36,7 @@ export default {
   data: function() {
     return {
       types: ["friendly match", "championship"],
-      icons: [ "🕒", "📅"]
+      icons: ["⚽", "🏆", "🕒", "📅", "📍"]
     };
   },
   components: {
@@ -45,14 +46,16 @@ export default {
     getEvent: function() {
       return this.eventData.event;
     },
-    getType: function() {
-      return this.types[this.getEvent().icon];
-    },
-    showMap: function(url) {
-      document.getElementById("map").style.display = "block";
-    },
     getLocation() {
       return this.locations[this.getEvent().location_id];
+    },
+    getMatchType: function() {
+      let icon = this.getEvent().icon;
+
+      return this.icons[icon] + " " + this.types[icon];
+    },
+    getTeamMascot(id) {
+      return this.teams[id].mascot;
     },
     getDatetime: function() {
       let date = this.getEvent().date;
@@ -60,38 +63,38 @@ export default {
 
       return new Date(date.year, date.month, date.day, time.hour, time.minutes);
     },
-    getTeamMascot(id) {
-      return this.teams[id].mascot;
-    },
     showMap: function() {
       document.getElementById("map").style.display = "block";
     }
   },
   computed: {
     ...mapState(["games", "teams", "locations", "eventData"]),
-    getLocationTitle() {
+    eventDescription () {
+      return this.getEvent().description;
+    },
+    locationTitle() {
       return this.getLocation().title;
     },
-    getLocationImg() {
+    locationImg() {
       return this.getLocation().img_url;
     },
-    getLocationMap() {
+    locationMap() {
       return this.getLocation().map_url;
     },
-    getLocationAddress() {
-      return this.getLocation().address;
-    },
-    getDate() {
+    time() {
       let date = this.getDatetime();
 
-      return this.icons[1] + " " + date.toLocaleDateString();
+      return this.icons[2] + " " + date.toLocaleTimeString();
     },
-    getTime() {
+    date() {
       let date = this.getDatetime();
 
-      return this.icons[0] + " " + date.toLocaleTimeString();
+      return this.icons[3] + " " + date.toLocaleDateString();
     },
-    getMascotNav() {
+    locationAddress() {
+      return this.icons[4] + " " + this.getLocation().address;
+    },
+    mascotsTitle() {
       let event = this.getEvent();
 
       return (
@@ -101,9 +104,9 @@ export default {
       );
     }
   },
-  mounted() {
+  beforeUpdate() {
     store.dispatch("setNavData", {
-      title: this.getType(),
+      title: this.getMatchType(),
       path: "/games",
       showPath: true
     });
@@ -112,79 +115,64 @@ export default {
 </script>
 
 <style>
-.container-m, .container-s {
+.container {
   display: flex;
   flex-wrap: nowrap;
 
   width: 100vw;
-  height: 45vh;
+  min-height: 1px;
 
   background-color: #202020;
   box-shadow: var(--shadow);
 
   overflow: hidden;
 
-  z-index: var(--middle-layer);
-}
-
-.container-s {
-  height: 35vh;
-}
-
-.container-1,
-.container-2,
-.container-3,
-.container-4 {
-  height: 100%;
-
-  padding: 1em;
-
-  text-align: justify;
-
-  background-color: whitesmoke;
-
-  overflow: hidden;
-
   z-index: var(--top-layer);
 }
 
-.container-1 p,
-.container-2 p,
-.container-3 p,
-.container-4 p {
+.container-half,
+.container-full {
+  height: 100%;
+  
+  padding: 1em;
+
+  background-color: whitesmoke;
+
+  z-index: var(--middle-layer);
+}
+
+.container-full p {
   font-size: 1.5em;
 
   text-align: justify;
+  text-shadow: none;
 }
 
-.container-1 {
-  width: 25%;
+.container-half p {
+  font-size: 1.25em;
+
+  text-align: justify;
+  text-shadow: none;
 }
 
-.container-2 {
-  width: 75%;
-}
-
-.container-3 {
-  width: 50%;
-}
-
-.container-4 {
+.container-half img,
+.container-full img { 
   width: 100%;
+  height: 200px;
+
+  object-fit: cover;
+  object-position: center;
 }
 
-.container-1 li,
-.container-2 li {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
+.container-half {
+  width: 50%;
+  height: 230px;
+  object-fit: cover;
+  object-position: center;
 }
 
-.container-1 img,
-.container-2 img {
-  height: 100%;
-
-  filter: saturate(125%);
+.container-full {
+  width: 100%;
 }
 
 .container-title {
@@ -200,9 +188,6 @@ export default {
     var(--sec-color),
     var(--main-color)
   );
-  background-repeat: no-repeat;
-
-  text-align: center;
 }
 
 .container-title h2 {
@@ -217,15 +202,19 @@ export default {
   display: flex;
   flex-wrap: nowrap;
 
-  padding: 1em;
-
   width: 100%;
 
-  padding-bottom: 1em;
+  padding: 1em;
+
+  text-align: left;
 
   background-color: var(--third-color);
   background-image: linear-gradient(to right, var(--third-color), #050505);
 
+  box-shadow: var(--shadow);
+}
+
+.container-transition h2 {
   text-align: left;
 }
 
@@ -257,29 +246,5 @@ export default {
   border-color: var(--sec-color);
 
   z-index: var(--top-layer);
-}
-
-.fit {
-  height: 100%;
-
-  object-fit: scale-down;
-}
-
-li {
-  list-style: none;
-}
-
-.container-m p {
-  font-size: 1.5em;
-  text-shadow: none;
-}
-
-.container-s p {
-  font-size: 1.25em;
-  text-shadow: none;
-}
-
-.container-transition h2 {
-  text-align: left;
 }
 </style>

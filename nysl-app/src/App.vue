@@ -65,7 +65,7 @@ h1,
 h2 {
   color: var(--title-color);
 
-  font-size: 2em;
+  font-size: 1.85em;
 
   text-shadow: var(--shadow);
   text-transform: uppercase;
@@ -106,9 +106,13 @@ a {
   border-color: var(--sec-color);
 }
 
+img {
+  filter: saturate(125%);
+}
+
 .info-container {
   width: 100%;
-  height: 25vmax;
+  height: 40vw;
 
   display: flex;
 
@@ -122,10 +126,9 @@ a {
 }
 
 .info-container img {
-  max-width: 100%;
+  width: 100vw;
   height: auto;
 
-  filter: saturate(125%);
   position: absolute;
 }
 
@@ -160,5 +163,9 @@ a {
 
 p {
   text-shadow: none;
+}
+
+li {
+  list-style: none;
 }
 </style>

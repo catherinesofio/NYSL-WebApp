@@ -36,13 +36,15 @@ export default {
 
 .map-container iframe {
   margin: auto;
-  margin-top: 3.8em;
+  margin-top: 12vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  min-height: 85vh;
+
+  width: 75vw;
+  min-height: 75vh;
 
   border-radius: 1em;
 

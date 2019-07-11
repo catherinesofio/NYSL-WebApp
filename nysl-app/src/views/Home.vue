@@ -51,5 +51,11 @@ export default {
   text-align: center;
 
   list-style: none;
+  
+  overflow: visible;
+}
+
+ul {
+  overflow: visible;
 }
 </style>

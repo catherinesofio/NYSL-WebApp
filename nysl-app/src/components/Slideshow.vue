@@ -1,24 +1,28 @@
 <template>
   <div id="slideshow">
-    <img class="slide" v-for="s in slideshow" :key="s" v-bind:src="s"/>
+    <img class="slide" v-for="s in slideshow" :key="s" v-bind:src="s" />
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex"
+import { mapState } from "vuex";
 
 export default {
-    name: "Slideshow",
-    computed: mapState (["slideshow"]),
-    mounted() {
-      InitSlideshow();
-    }
+  name: "Slideshow",
+  computed: mapState(["slideshow"]),
+  mounted() {
+    InitSlideshow();
+  },
+  beforeDestroy() {
+    ClearTimeout();
+  }
 };
 
 let curr = 0;
 let next = 1;
 let speed = 3000;
 let slides = [];
+let id;
 
 function InitSlideshow() {
   slides = document.getElementsByClassName("slide");
@@ -28,7 +32,7 @@ function InitSlideshow() {
   }
   slides[curr].style.opacity = 1.0;
 
-  setTimeout(TriggerTransition, speed);
+  id = setTimeout(TriggerTransition, speed);
 }
 
 function TriggerTransition() {
@@ -53,15 +57,21 @@ function FadeIn() {
     e.style.opacity = 1.0;
     ChangeSlide();
   } else {
-    setTimeout(TriggerTransition, 50);
+    ClearTimeout();
+    id = setTimeout(TriggerTransition, 50);
   }
 }
 
 function ChangeSlide() {
   curr = next;
-  next = (next + 1) % (slides.length);
+  next = (next + 1) % slides.length;
+  
+  ClearTimeout();
+  id = setTimeout(TriggerTransition, speed);
+}
 
-  setTimeout(TriggerTransition, speed);
+function ClearTimeout() {
+  clearTimeout(id);
 }
 </script>
 
@@ -72,7 +82,7 @@ function ChangeSlide() {
 
   position: absolute;
   top: 0;
-  
+
   z-index: var(--base-layer);
 
   overflow: hidden;
@@ -81,7 +91,5 @@ function ChangeSlide() {
 .slide {
   height: 100vmax;
   position: absolute;
-
-  filter:saturate(125%);
 }
 </style>
