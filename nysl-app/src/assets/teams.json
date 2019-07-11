@@ -2,32 +2,38 @@
     "data": [{
             "id": 0,
             "title": "Irelanders",
-            "img_url": "http://rathvillyns.com/images/IMG_0693_5rjd8ov9.jpg"
+            "img_url": "http://rathvillyns.com/images/IMG_0693_5rjd8ov9.jpg",
+            "mascot": "🐐"
         },
         {
             "id": 1,
             "title": "D.T 'Em",
-            "img_url": "https://www.tis.edu.mo/sports/wp-content/uploads/sites/4/2017/11/TIS_BOYS.jpg"
+            "img_url": "https://www.tis.edu.mo/sports/wp-content/uploads/sites/4/2017/11/TIS_BOYS.jpg",
+            "mascot": "🦍"
         },
         {
             "id": 2,
             "title": "T-Chos",
-            "img_url": "http://www.mcnees.org/nnhs/teams/soccer-06/nnhs_soccer06_varsity_team.jpg"
+            "img_url": "http://www.mcnees.org/nnhs/teams/soccer-06/nnhs_soccer06_varsity_team.jpg",
+            "mascot": "🐱"
         },
         {
             "id": 3,
             "title": "Blue Team",
-            "img_url": "https://cmgpbpyouthsportsdaily.files.wordpress.com/2009/09/img_0011-2.jpg"
+            "img_url": "https://cmgpbpyouthsportsdaily.files.wordpress.com/2009/09/img_0011-2.jpg",
+            "mascot": "🐺"
         },
         {
             "id": 4,
             "title": "U5",
-            "img_url": "https://i.ytimg.com/vi/_ughyzbHeYE/maxresdefault.jpg"
+            "img_url": "https://i.ytimg.com/vi/_ughyzbHeYE/maxresdefault.jpg",
+            "mascot": "🐴"
         },
         {
             "id": 5,
             "title": "U6",
-            "img_url": "https://vignette.wikia.nocookie.net/nickfanon/images/6/69/Offnesivememe.jpg/revision/latest?cb=20160512152941"
+            "img_url": "https://vignette.wikia.nocookie.net/nickfanon/images/6/69/Offnesivememe.jpg/revision/latest?cb=20160512152941",
+            "mascot": "🐯"
         }
     ]
 }
