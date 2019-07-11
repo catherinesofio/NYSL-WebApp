@@ -78,6 +78,7 @@ h2 {
   font-weight: bold;
 
   text-align: left;
+  text-shadow: none;
 }
 
 .panel a {

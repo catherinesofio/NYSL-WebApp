@@ -33,6 +33,8 @@ export default {
     store.dispatch("setNavData", { title: "NORTHSIDE YOUTH SOCCER LEAGUE", path: "/", showPath: false });
   }
 };
+
+window.scrollTo(0, 1);
 </script>
 
 <style>

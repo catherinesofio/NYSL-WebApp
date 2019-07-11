@@ -104,6 +104,13 @@ export default {
       );
     }
   },
+  mounted() {
+    store.dispatch("setNavData", {
+      title: this.getMatchType(),
+      path: "/games",
+      showPath: true
+    });
+  },
   beforeUpdate() {
     store.dispatch("setNavData", {
       title: this.getMatchType(),
@@ -112,6 +119,8 @@ export default {
     });
   }
 };
+
+window.scrollTo(0, 1);
 </script>
 
 <style>
