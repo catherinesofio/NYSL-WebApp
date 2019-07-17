@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="page">
     <div class="info-container" v-for="t in teams" v-bind:key="t.id">
       <img v-bind:src="t.img_url" />
       <h2>{{ getTitle(t) }}</h2>

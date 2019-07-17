@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section class="page">
     <Slideshow />
     <section id="home-nav">
       <ul>
@@ -15,7 +15,7 @@
       </ul>
     </section>
     <Footer />
-  </div>
+  </section>
 </template>
 
 <script>
@@ -29,12 +29,13 @@ export default {
     Slideshow,
     Footer
   },
+  beforeCreate() {
+    window.scrollTo(0, 0);
+  },
   mounted() {
     store.dispatch("setNavData", { title: "NORTHSIDE YOUTH SOCCER LEAGUE", path: "/", showPath: false });
   }
 };
-
-window.scrollTo(0, 1);
 </script>
 
 <style>

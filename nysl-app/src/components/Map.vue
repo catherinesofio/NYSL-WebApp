@@ -31,7 +31,7 @@ export default {
 .map-container {
   background-color: rgba(32, 32, 32, 0.85);
 
-  z-index: 15;
+  z-index: var(--map-layer);
 }
 
 .map-container iframe {
@@ -50,7 +50,7 @@ export default {
 
   box-shadow: var(--shadow);
 
-  z-index: var(--top-layer);
+  z-index: var(--map-layer);
 }
 
 .map-container button {
@@ -84,7 +84,7 @@ export default {
   border-width: 0.075em;
   border-color: var(--sec-color);
 
-  z-index: var(--middle-layer);
+  z-index: var(--map-layer);
 }
 
 .btn-map {
@@ -117,6 +117,6 @@ export default {
   border-width: 0.075em;
   border-color: var(--sec-color);
 
-  z-index: var(--middle-layer);
+  z-index: var(--map-layer);
 }
 </style>

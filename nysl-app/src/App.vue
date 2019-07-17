@@ -2,7 +2,9 @@
   <div id="app">
     <Nav />
     <Spacer />
-    <router-view />
+    <transition name="fade">
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -21,6 +23,19 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+  
+  width: 100vw;
+  height: 100vh;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  
+  width: 100vw;
+  height: 100vh; 
+}
 
 :root {
   --title-color: whitesmoke;
@@ -34,6 +49,7 @@ export default {
   --middle-layer: 5;
   --top-layer: 10;
   --nav-layer: 15;
+  --map-layer: 50;
 }
 
 * {
@@ -45,6 +61,10 @@ export default {
   padding: 0%;
 
   z-index: var(--back-layer);
+
+  scroll-behavior: smooth;
+
+  user-select: none!important;
 }
 
 html {
@@ -167,5 +187,18 @@ p {
 
 li {
   list-style: none;
+}
+
+a:focus, a:active, button:focus, button:active {
+  outline: 0;
+}
+
+a *, button * {
+  user-select: none;
+}
+
+a:focus, a:hover, a:active, button:focus, button:hover, button:active {
+  opacity: 1;
+  background-color: rgba(1, 1, 1, 0.25);
 }
 </style>

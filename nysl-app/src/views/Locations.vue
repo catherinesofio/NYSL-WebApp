@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="page">
     <div class="info-container" v-for="l in locations" v-bind:key="l.id">
       <div>
         <img v-bind:src="l.img_url" />
@@ -33,6 +33,9 @@ export default {
     }
   },
   computed: mapState(["locations"]),
+  beforeCreate() {
+    window.scrollTo(0, 0);
+  },
   mounted() {
     store.dispatch("setNavData", {
       title: "LOCATIONS",
