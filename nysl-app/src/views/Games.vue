@@ -7,12 +7,11 @@
           <h2>{{ getTitle(e) }}</h2>
           <p>{{ getDate(e) }}</p>
         </div>
-        <router-link v-on:mousedown.native="updateEventData(e)" tag="button" class="btn-expand portrait" to="/event" >➤</router-link>
-        <button v-on:click="updateEventData(e)" class="btn-expand landscape">➤</button>
+        <button v-on:click="updateEventData($event, e)" class="btn-expand">➤</button>
       </div>
     </div>
-    <div class="landscape column-right">
-      <div class="background column" ></div>
+    <div class="column-right">
+      <div class="background landscape column-right"></div>
       <EventTemplate id="event" class="column" />
     </div>
   </section>
@@ -31,8 +30,7 @@ export default {
   data: function() {
     return {
       types: ["friendly match", "championship"],
-      icons: ["⚽", "🏆"],
-      reset: true
+      icons: ["⚽", "🏆"]
     };
   },
   computed: {
@@ -66,33 +64,54 @@ export default {
     getLocation: function(id) {
       return this.locations[id].title;
     },
-    resetEventData() {
-      this.reset = true;
-      let e = this.games[0];
-      store.dispatch("setEventData", { event: e, title: this.getMatchType(e) });
-    },
-    updateEventData(e) {
-      document.getElementById("event").style.display = "flex";
+    updateEventData(ev, e) {
+      let curr = document.getElementById("curr-event");
+      if (curr != null) {
+        curr.setAttribute("id", "");
+      }
+
+      ev.target.setAttribute("id", "curr-event");
+
+      this.updateEvent(e);
+
       window.location.hash = "";
       window.location.hash = "#event-top";
 
       this.reset = false;
       store.dispatch("setEventData", { event: e, title: this.getMatchType(e) });
+    },
+    updateEvent(e) {
+      if (document.getElementById("curr-event") != null) {
+        let ev = document.getElementById("event");
+        if (Math.abs(window.orientation) === 90) {
+          ev.style.display = "flex";
+          window.location.hash = "";
+          window.location.hash = "#curr-event";
+        } else {
+          ev.style.display = "block";
+          store.dispatch("setNavData", {
+            title: this.getMatchType(e),
+            path: "/",
+            showPath: false
+          });
+          store.dispatch("setNavPopup", true);
+        }
+      }
     }
   },
   beforeCreate() {
     window.scrollTo(0, 0);
   },
+  created() {
+    window.addEventListener("orientationchange", this.updateEvent);
+  },
   mounted() {
     document.getElementById("event").style.display = "none";
 
-    this.reset = true;
     store.dispatch("setNavData", { title: "GAMES", path: "/", showPath: true });
   },
-  destroyed() {
-    if (this.reset){
-      this.resetEventData();
-    }
+  beforeDestroy() {
+    window.removeEventListener("orientationchange", this.updateEvent);
   }
 };
 </script>
@@ -102,9 +121,8 @@ export default {
   box-sizing: content-box;
   display: flex;
   flex-wrap: nowrap;
-
-  position: relative;
   padding: 0.5em;
+  position: relative;
 
   background-color: var(--title-color);
   background-image: linear-gradient(
@@ -112,14 +130,12 @@ export default {
     var(--sec-color),
     var(--main-color)
   );
-
   box-shadow: var(--shadow);
 }
 
 .panel p {
   font-size: 1.15em;
   font-weight: bold;
-
   text-align: left;
   text-shadow: none;
 }
@@ -135,30 +151,30 @@ h2 {
 .btn-expand {
   width: 100%;
   height: inherit;
-
   padding-left: 0.15em;
-  padding-right: 0.30em;
-
+  padding-right: 0.3em;
   position: absolute;
-  bottom:0;
+  bottom: 0;
   top: 0;
   right: 0;
 
-  color: var(--sec-color);
-  opacity: 0.5;
-
   font-weight: bold;
   font-size: 2em;
-
   text-align: right;
 
+  opacity: 0.5;
+  color: var(--sec-color);
   background-color: rgba(0, 0, 0, 0);
 
   border-width: 0;
 }
 
-.btn-expand:active, .btn-expand:focus, .btn-expand:hover {
-  color: rgba(255, 255, 255, 0.75);  opacity: 1;
+#curr-event,
+.btn-expand:active,
+.btn-expand:focus,
+.btn-expand:hover {
+  color: rgba(255, 255, 255, 0.75);
+  opacity: 1;
   background-color: rgba(1, 1, 1, 0.25);
   mix-blend-mode: overlay;
 }
@@ -173,27 +189,47 @@ h2 {
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
-  
+
   overflow-x: hidden;
   overflow-y: visible;
 }
 
-.column-left, .column-right {
+.column-left,
+.column-right {
   box-sizing: border-box;
   position: relative;
+
   scroll-behavior: smooth;
+
+  z-index: var(--back-layer)!important;
 }
 
 .background {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: var(--spacer);
+  right: 0;
+
   background-color: var(--third-color);
-  z-index: var(--base-layer);
+
+  z-index: var(--back-layer)!important;
 }
 
-#event { 
-  display: flex;
+#event,
+#event * {
+  z-index: var(--middle-layer);
 }
 
-@media (orientation: portrait) {
+#map {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+@media screen and (orientation: portrait) {
   .portrait {
     display: block;
   }
@@ -206,41 +242,43 @@ h2 {
     display: block;
   }
 
-  .column-left, .column-right {
+  .column-left,
+  .column-right {
     width: 100vw;
-    float: none;
-    clear: none;
+  }
+
+  .background {
+    height: 100vh;
+    margin-bottom: 25px;
+    position: absolute;
+    top: 0;
+
+    opacity: 0.75;
+  }
+
+  #event {
+    min-height: 100vh;
+    margin: 0;
+    margin-top: var(--spacer);
+    position: fixed;
+    top: 0;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 }
 
-@media (orientation: landscape) { 
+@media screen and (orientation: landscape) {
   .portrait {
     display: none;
   }
 
+  .landscape {
+    display: flex;
+  }
+
   .row {
     position: fixed;
-  }
-
-  .column-left, .column-right {
-    height: 100vh;
-    padding-bottom: 15vh;
-    overflow-x: hidden;
-    overflow-y: scroll;
-  }
-
-  .column-left {
-    width: 55vw;
-    float: left;
-    clear: left;
-  }
-
-  .column-right {
-    display: flex;
-    flex-wrap: wrap;
-    width: 45vw;
-    float: right;
-    clear: right;
   }
 
   .column {
@@ -249,13 +287,34 @@ h2 {
     width: 100%;
   }
 
-  #map, .map-container {
-    top: 0;
-    left: 0;
+  .column-left,
+  .column-right {
+    height: 100vh;
+    padding-bottom: var(--spacer);
 
-    position: fixed;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 
-    z-index: var(--map-layer);
+  .column-left {
+    width: 55vw;
+
+    float: left;
+    clear: left;
+  }
+
+  .column-right {
+    display: flex;
+    flex-wrap: wrap;
+    width: 45vw;
+
+    float: right;
+    clear: right;
+  }
+
+  #event {
+    display: flex;
+    position: none;
   }
 }
 </style>

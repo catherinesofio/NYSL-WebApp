@@ -11,8 +11,7 @@ export default {
 <style>
 .spacer {
   width: 100%;
-  height: 55px;
-
+  height:var(--spacer);
   top: 0;
 }
 </style>

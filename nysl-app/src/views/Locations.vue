@@ -50,16 +50,12 @@ export default {
 .btn-map {
   width: 2em;
   height: 2em;
-
   margin: 0.5em;
-
   position: absolute;
-
   top: 0;
   right: 0;
 
   font-size: 1em;
-
   text-align: center;
   text-shadow: var(--shadow);
 
@@ -72,12 +68,9 @@ export default {
   box-shadow: var(--shadow);
 
   border-radius: 5px;
-
   border-style: solid;
   border-width: 0.075em;
   border-color: var(--sec-color);
-
-  z-index: var(--middle-layer);
 }
 
 .info-container:nth-child(even) .btn-map {

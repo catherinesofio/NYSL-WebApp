@@ -22,13 +22,6 @@ export default new Router({
       }
     },
     {
-      path: "/event",
-      name: "event",
-      component: function() {
-        return import("./views/Event.vue");
-      }
-    },
-    {
       path: "/locations",
       name: "locations",
       component: function() {

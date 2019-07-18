@@ -28,29 +28,29 @@ export default {
   top: 0;
 }
 
-.map-container {
-  background-color: rgba(32, 32, 32, 0.85);
+#map, #map * {
+  z-index: var(--map-layer)!important;
+}
 
-  z-index: var(--map-layer);
+.map-container {
+  position: relative;
+
+  background-color: rgba(32, 32, 32, 0.85);
 }
 
 .map-container iframe {
-  margin: auto;
-  margin-top: 12vh;
   display: flex;
   flex-direction: column;
+  margin: auto;
+  margin-top: 12vh;
+
   justify-content: center;
   align-items: center;
   text-align: center;
 
-  width: 75vw;
-  min-height: 75vh;
-
   border-radius: 1em;
 
   box-shadow: var(--shadow);
-
-  z-index: var(--map-layer);
 }
 
 .map-container button {
@@ -62,14 +62,12 @@ export default {
   position: absolute;
   right: 0;
 
-  color: var(--title-color);
-
   font-size: 1.5em; 
   font-weight: bold;
-
   text-align: center;
   text-shadow: var(--shadow);
 
+  color: var(--title-color);
   background-color: var(--main-color);
   background-image: linear-gradient(
     to bottom right,
@@ -79,27 +77,20 @@ export default {
   box-shadow: var(--shadow);
 
   border-radius: 5px;
-
   border-style: solid;
   border-width: 0.075em;
   border-color: var(--sec-color);
-
-  z-index: var(--map-layer);
 }
 
 .btn-map {
   width: 2em;
   height: 2em;
-
   margin: 0.5em;
-
   position: absolute;
-
   top: 0;
   right: 0;
 
   font-size: 1em;
-
   text-align: center;
   text-shadow: var(--shadow);
 
@@ -112,11 +103,22 @@ export default {
   box-shadow: var(--shadow);
 
   border-radius: 5px;
-
   border-style: solid;
   border-width: 0.075em;
   border-color: var(--sec-color);
+}
 
-  z-index: var(--map-layer);
+@media screen and (orientation: portrait) { 
+  .map-container iframe {
+    width: 75vw;
+    min-height: 80vh;
+  }
+}
+
+@media screen and (orientation: landscape) { 
+  .map-container iframe {
+    width: 85vw;
+    min-height: 75vh;
+  }
 }
 </style>

@@ -33,19 +33,30 @@ export default {
     window.scrollTo(0, 0);
   },
   mounted() {
-    store.dispatch("setNavData", { title: "NORTHSIDE YOUTH SOCCER LEAGUE", path: "/", showPath: false });
+    store.dispatch("setNavData", {
+      title: "NORTHSIDE YOUTH SOCCER LEAGUE",
+      path: "/",
+      showPath: false
+    });
   }
 };
 </script>
 
 <style>
+#home-nav,
+#home-nav * {
+  z-index: var(--middle-layer) !important;
+}
+
 #home-nav {
   display: flex;
   flex-direction: column;
+  min-height: 85vh;
+
   justify-content: center;
   align-items: center;
+
   text-align: center;
-  min-height: 85vh;
 }
 
 #home-nav li {
@@ -54,7 +65,7 @@ export default {
   text-align: center;
 
   list-style: none;
-  
+
   overflow: visible;
 }
 

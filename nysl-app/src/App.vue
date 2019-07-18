@@ -23,18 +23,20 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-  
+.fade-enter-active,
+.fade-leave-active {
   width: 100vw;
   height: 100vh;
+
+  transition: opacity 0.5s;
 }
 
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-  
+.fade-enter,
+.fade-leave-to {
   width: 100vw;
-  height: 100vh; 
+  height: 100vh;
+
+  opacity: 0;
 }
 
 :root {
@@ -44,27 +46,26 @@ export default {
   --sec-color: yellowgreen;
   --third-color: #202020;
 
-  --base-layer: 0;
-  --back-layer: 1;
-  --middle-layer: 5;
-  --top-layer: 10;
-  --nav-layer: 15;
-  --map-layer: 50;
+  --slideshow-layer: 0;
+  --base-layer: 1;
+  --back-layer: 2;
+  --middle-layer: 3;
+  --top-layer: 4;
+  --nav-layer: 5;
+  --map-layer: 6;
+
+  --spacer: 55px;
 }
 
 * {
   font-family: "Roboto Condensed", sans-serif;
 
   box-sizing: border-box;
-
   margin: 0%;
   padding: 0%;
 
-  z-index: var(--back-layer);
-
-  scroll-behavior: smooth;
-
-  user-select: none!important;
+  scroll-behavior: smooth !important;
+  user-select: none !important;
 }
 
 html {
@@ -77,39 +78,35 @@ html {
     var(--main-color),
     var(--sec-color)
   );
-  background-size: cover;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 h1,
 h2 {
-  color: var(--title-color);
-
   font-size: 1.85em;
-
-  text-shadow: var(--shadow);
   text-transform: uppercase;
+  text-shadow: var(--shadow);
+
+  color: var(--title-color);
 }
 
 p,
 a,
 h2 {
   font-size: 1.5em;
-
   text-decoration: none;
-
   text-align: justify;
 }
 
 a {
   padding: 0.5em;
 
-  color: var(--title-color);
-
   font-weight: bold;
-
   text-align: center;
   text-shadow: var(--shadow);
+
+  color: var(--title-color);
 
   background-color: var(--main-color);
   background-image: linear-gradient(
@@ -120,65 +117,9 @@ a {
   box-shadow: var(--shadow);
 
   border-radius: 5px;
-
   border-style: solid;
   border-width: 0.075em;
   border-color: var(--sec-color);
-}
-
-img {
-  filter: saturate(125%);
-}
-
-.info-container {
-  width: 100%;
-  height: 40vw;
-
-  display: flex;
-
-  position: relative;
-
-  background-color: #050505;
-
-  box-shadow: var(--shadow);
-
-  overflow: hidden;
-}
-
-.info-container img {
-  width: 100vw;
-  height: auto;
-
-  position: absolute;
-}
-
-.info-container h2 {
-  width: 100%;
-
-  padding: 0.25em;
-
-  position: absolute;
-  bottom: 0;
-
-  background-image: linear-gradient(
-    to right,
-    var(--third-color),
-    rgba(34, 139, 34, 0)
-  );
-
-  box-shadow: var(--shadow);
-
-  z-index: var(--middle-layer);
-}
-
-.info-container:nth-child(even) h2 {
-  background-image: linear-gradient(
-    to left,
-    var(--third-color),
-    rgba(34, 139, 34, 0)
-  );
-
-  text-align: end;
 }
 
 p {
@@ -189,16 +130,70 @@ li {
   list-style: none;
 }
 
-a:focus, a:active, button:focus, button:active {
+a:focus,
+a:active,
+button:focus,
+button:active {
   outline: 0;
 }
 
-a *, button * {
-  user-select: none;
-}
-
-a:focus, a:hover, a:active, button:focus, button:hover, button:active {
+a:focus,
+a:hover,
+a:active,
+button:focus,
+button:hover,
+button:active {
   opacity: 1;
   background-color: rgba(1, 1, 1, 0.25);
+}
+
+img {
+  filter: saturate(125%);
+}
+
+.info-container, .info-container * {
+  z-index: var(--middle-layer);
+}
+
+.info-container {
+  display: flex;
+  width: 100%;
+  height: 40vw;
+  position: relative;
+
+  background-color: #050505;
+  box-shadow: var(--shadow);
+
+  overflow: hidden;
+}
+
+.info-container img {
+  width: 100vw;
+  height: auto;
+  position: absolute;
+}
+
+.info-container h2 {
+  width: 100%;
+  padding: 0.25em;
+  position: absolute;
+  bottom: 0;
+
+  background-image: linear-gradient(
+    to right,
+    var(--third-color),
+    rgba(34, 139, 34, 0)
+  );
+  box-shadow: var(--shadow);
+}
+
+.info-container:nth-child(even) h2 {
+  text-align: end;
+
+  background-image: linear-gradient(
+    to left,
+    var(--third-color),
+    rgba(34, 139, 34, 0)
+  );
 }
 </style>

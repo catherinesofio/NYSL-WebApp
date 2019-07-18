@@ -65,7 +65,7 @@ function FadeIn() {
 function ChangeSlide() {
   curr = next;
   next = (next + 1) % slides.length;
-  
+
   ClearTimeout();
   id = setTimeout(TriggerTransition, speed);
 }
@@ -79,13 +79,12 @@ function ClearTimeout() {
 #slideshow {
   width: 100vw;
   height: 100%;
-
   position: absolute;
   top: 0;
 
-  z-index: var(--base-layer);
-
   overflow: hidden;
+
+  z-index: var(--slideshow-layer)!important;
 }
 
 .slide {

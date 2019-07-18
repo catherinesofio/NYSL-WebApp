@@ -12,24 +12,25 @@ export default new Vuex.Store({
     title: "NYSL",
     path: "/",
     showPath: false,
+    showPopup: false,
     eventData: {
       event: dataGames.data[0],
       title: (dataGames.data[0].icon === 0) ? "FRIENDLY MATCH" : "CHAMPIONSHIP"
     },
     slideshow: dataSlideshow.data,
-    games: dataGames.data/*dataGames.data.forEach(x => {
+    games: dataGames.data,/*.forEach(function (x) {
       let date = x.date;
       let time = x.time;
-  
-      return new {
-        team_a_id = x.team_a_id,
-        team_b_id = x.team_b_id,
-        location_id = x.location_id,
-        description = x.description,
-        datetime = new Date(date.year, date.month, date.day, time.hour, time.minutes),
-        is_scheduled = x.is_scheduled
+      let obj = {
+        team_a_id: x.team_a_id,
+        team_b_id: x.team_b_id,
+        location_id: x.location_id,
+        description: x.description,
+        datetime: new Date(date.year, date.month, date.day, time.hour, time.minutes),
+        is_scheduled: x.is_scheduled
       };
-    }).sort((a, b) => { return (a.datetime > b.datetime) ? a : b; })*/,
+      return obj;
+    }).sort(function (a, b) { return (a.datetime > b.datetime) ? a : b; })*/
     locations: dataLocations.data,
     teams: dataTeams.data,
   },
@@ -41,6 +42,9 @@ export default new Vuex.Store({
       state.title = title;
       state.path = path;
       state.showPath = showPath;
+    },
+    SET_POP_UP (state, showPopup) {
+      state.showPopup = showPopup;
     }
   },
   actions: {
@@ -49,6 +53,9 @@ export default new Vuex.Store({
     },
     setNavData (context, { title, path, showPath }) {
       context.commit("SET_NAV_DATA", { title, path, showPath });
+    },
+    setNavPopup (context, showPopup) {
+      context.commit("SET_POP_UP", showPopup);
     }
   },
   getters: {

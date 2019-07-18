@@ -1,5 +1,6 @@
 <template>
   <section>
+    <div class="background portrait"></div>
     <div class="container">
       <div id="event-top" class="container-full">
         <div class="container-title">
@@ -17,9 +18,15 @@
         <img v-bind:src="locationImg" v-bind:alt="locationAddress" />
       </div>
       <ul class="container-half">
-        <li><p>{{ date }}</p></li>
-        <li><p>{{ time }}</p></li>
-        <li><p>{{ locationAddress }}</p></li>
+        <li>
+          <p>{{ date }}</p>
+        </li>
+        <li>
+          <p>{{ time }}</p>
+        </li>
+        <li>
+          <p>{{ locationAddress }}</p>
+        </li>
       </ul>
     </div>
     <Map v-bind:url="locationMap" />
@@ -29,6 +36,7 @@
 <script>
 import Map from "@/components/Map.vue";
 import { mapState } from "vuex";
+import store from "@/store.js";
 
 export default {
   data: function() {
@@ -63,11 +71,31 @@ export default {
     },
     showMap: function() {
       document.getElementById("map").style.display = "block";
+    },
+    updateEvent() {
+      if (document.getElementById("curr-event") != null) {
+        let ev = document.getElementById("event");
+        if (Math.abs(window.orientation) === 90) {
+          store.dispatch("setNavData", {
+            title: "GAMES",
+            path: "/",
+            showPath: true
+          });
+          store.dispatch("setNavPopup", false);
+        } else {
+          store.dispatch("setNavData", {
+            title: this.getMatchType(this.getEvent()),
+            path: "/",
+            showPath: false
+          });
+          store.dispatch("setNavPopup", true);
+        }
+      }
     }
   },
   computed: {
     ...mapState(["games", "teams", "locations", "eventData"]),
-    eventDescription () {
+    eventDescription() {
       return this.getEvent().description;
     },
     locationTitle() {
@@ -101,11 +129,21 @@ export default {
         this.getTeamMascot(event.team_b_id)
       );
     }
+  },
+  created() {
+    window.addEventListener("orientationchange", this.updateEvent);
+  },
+  beforeDestroy() {
+    window.removeEventListener("orientationchange", this.updateEvent);
   }
 };
 </script>
 
 <style>
+.container, .container * {
+  z-index: var(--middle-layer)!important;
+}
+
 .container {
   display: flex;
   flex-wrap: nowrap;
@@ -117,19 +155,15 @@ export default {
   box-shadow: var(--shadow);
 
   overflow: hidden;
-
-  z-index: var(--top-layer);
 }
 
 .container-half,
 .container-full {
   height: 100%;
-  
+
   padding: 1em;
 
   background-color: whitesmoke;
-
-  z-index: var(--middle-layer);
 }
 
 .container-full p {
@@ -147,7 +181,7 @@ export default {
 }
 
 .container-half img,
-.container-full img { 
+.container-full img {
   width: 100%;
   height: 200px;
 
@@ -158,6 +192,7 @@ export default {
 .container-half {
   width: 50%;
   height: 230px;
+
   object-fit: cover;
   object-position: center;
 }
@@ -174,9 +209,7 @@ export default {
 .container-title {
   display: flex;
   flex-wrap: nowrap;
-
   width: 100%;
-
   margin-bottom: 1em;
 
   background-image: linear-gradient(
@@ -188,7 +221,6 @@ export default {
 
 .container-title h2 {
   width: 100%;
-
   padding: 0.5em;
 
   text-align: center;
@@ -197,16 +229,13 @@ export default {
 .container-transition {
   display: flex;
   flex-wrap: nowrap;
-
   width: 100%;
-
   padding: 1em;
 
   text-align: left;
 
   background-color: var(--third-color);
   background-image: linear-gradient(to right, var(--third-color), #050505);
-
   box-shadow: var(--shadow);
 }
 
@@ -223,7 +252,6 @@ export default {
   height: 2em;
 
   font-size: 1em;
-
   text-align: center;
   text-shadow: var(--shadow);
 
@@ -236,11 +264,8 @@ export default {
   box-shadow: var(--shadow);
 
   border-radius: 5px;
-
   border-style: solid;
   border-width: 0.075em;
   border-color: var(--sec-color);
-
-  z-index: var(--top-layer);
 }
 </style>
