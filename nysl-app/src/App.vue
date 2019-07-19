@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Nav />
+    <NavExtension />
     <Spacer />
     <transition name="fade">
       <router-view />
@@ -10,12 +11,14 @@
 
 <script>
 import Nav from "@/components/Nav.vue";
+import NavExtension from "@/components/NavExtension.vue";
 import Spacer from "@/components/Spacer.vue";
 
 export default {
   name: "app",
   components: {
     Nav,
+    NavExtension,
     Spacer
   }
 };
@@ -53,6 +56,7 @@ export default {
   --top-layer: 4;
   --nav-layer: 5;
   --map-layer: 6;
+  --popup-layer: 7;
 
   --spacer: 55px;
 }

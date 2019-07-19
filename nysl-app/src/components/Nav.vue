@@ -35,6 +35,7 @@ nav, nav * {
 }
 
 nav {
+  box-sizing: border-box;
   display: flex;
   flex-flow: row;
   width: 100%;

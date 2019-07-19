@@ -174,6 +174,7 @@ export default {
 }
 
 .container-half p {
+  margin-left: -1em;
   font-size: 1.25em;
 
   text-align: justify;

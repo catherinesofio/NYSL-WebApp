@@ -82,7 +82,8 @@ function ClearTimeout() {
   position: absolute;
   top: 0;
 
-  overflow: hidden;
+  overflow: hidden !important;
+  overflow-y: hidden;
 
   z-index: var(--slideshow-layer)!important;
 }
@@ -90,5 +91,8 @@ function ClearTimeout() {
 .slide {
   height: 100vmax;
   position: absolute;
+
+  overflow: hidden !important;
+  overflow-y: hidden;
 }
 </style>
