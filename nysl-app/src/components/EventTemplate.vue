@@ -163,7 +163,7 @@ export default {
 
   padding: 1em;
 
-  background-color: whitesmoke;
+  background-image: linear-gradient(to bottom right, whitesmoke, rgb(235, 235, 235));
 }
 
 .container-full p {

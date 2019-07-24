@@ -33,6 +33,7 @@ export default new Vuex.Store({
     }).sort(function (a, b) { return (a.datetime > b.datetime) ? a : b; })*/
     locations: dataLocations.data,
     teams: dataTeams.data,
+    register: false
   },
   mutations: {
     SET_EVENT_DATA (state, { event, title }) {
@@ -45,6 +46,9 @@ export default new Vuex.Store({
     },
     SET_POP_UP (state, showPopup) {
       state.showPopup = showPopup;
+    },
+    SET_REGISTER (state, register) {
+      state.register = register;
     }
   },
   actions: {
@@ -56,6 +60,9 @@ export default new Vuex.Store({
     },
     setNavPopup (context, showPopup) {
       context.commit("SET_POP_UP", showPopup);
+    },
+    setRegister (context, register) {
+      context.commit("SET_REGISTER", register);
     }
   },
   getters: {

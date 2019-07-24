@@ -9,7 +9,7 @@
     <div>
       <ul v-show="!user && expanded">
         <li>
-          <a v-on:click="openPopup">
+          <a v-on:click="openPopup(true)">
             <img
               class="user-ignore"
               src="https://png.pngtree.com/svg/20170802/dab5c3329c.svg"
@@ -17,7 +17,7 @@
           </a>
         </li>
         <li>
-          <a v-on:click="openPopup">
+          <a v-on:click="openPopup(false)">
             <img
               class="user-ignore"
               src="https://static.thenounproject.com/png/6478-200.png"
@@ -52,6 +52,7 @@
 
 <script>
 import UserPopup from "@/components/UserPopup.vue";
+import store from "@/store.js";
 
 let user;
 
@@ -70,9 +71,10 @@ export default {
     expand() {
       this.expanded = !this.expanded;
     },
-    openPopup() {
+    openPopup(register) {
       this.expanded = false;
       document.getElementById("user-popup").style.display = "block";
+      store.dispatch("setRegister", register);
     }
   },
   mounted() {
@@ -83,30 +85,10 @@ export default {
       e => {
         if (e.target.className !== "user-ignore") {
           this.expanded = false;
-
-          /*if (e.target.tagName != "A") {
-            user.style.opacity = 0.5;
-            user.style.width = "2.85em";
-            user.style.height = "2.85em";
-            user.style.marginRight = "0.55em";
-            user.style.marginBottom = "0.55em";
-          }*/
         }
       },
       true
     );
-
-    /*window.addEventListener(
-      "touchend",
-      () => {
-        user.style.opacity = 1;
-        user.style.width = "3em";
-        user.style.height = "3em";
-        user.style.marginRight = "0.5em";
-        user.style.marginBottom = "0.5em";
-      },
-      true
-    );*/
 
     window.addEventListener(
       "scroll",
