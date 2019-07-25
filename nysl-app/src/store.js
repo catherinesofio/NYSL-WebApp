@@ -18,22 +18,11 @@ export default new Vuex.Store({
       title: (dataGames.data[0].icon === 0) ? "FRIENDLY MATCH" : "CHAMPIONSHIP"
     },
     slideshow: dataSlideshow.data,
-    games: dataGames.data,/*.forEach(function (x) {
-      let date = x.date;
-      let time = x.time;
-      let obj = {
-        team_a_id: x.team_a_id,
-        team_b_id: x.team_b_id,
-        location_id: x.location_id,
-        description: x.description,
-        datetime: new Date(date.year, date.month, date.day, time.hour, time.minutes),
-        is_scheduled: x.is_scheduled
-      };
-      return obj;
-    }).sort(function (a, b) { return (a.datetime > b.datetime) ? a : b; })*/
+    games: dataGames.data,
     locations: dataLocations.data,
     teams: dataTeams.data,
-    register: false
+    register: false,
+    user: null
   },
   mutations: {
     SET_EVENT_DATA (state, { event, title }) {
@@ -49,6 +38,9 @@ export default new Vuex.Store({
     },
     SET_REGISTER (state, register) {
       state.register = register;
+    },
+    SET_USER (state, user) {
+      state.user = user;
     }
   },
   actions: {
@@ -63,6 +55,9 @@ export default new Vuex.Store({
     },
     setRegister (context, register) {
       context.commit("SET_REGISTER", register);
+    },
+    setUser (context, user) {
+      context.commit("SET_USER", user);
     }
   },
   getters: {

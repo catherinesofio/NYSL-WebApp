@@ -4,7 +4,7 @@
     <div class="popup" >
       <button class="btn-close" v-on:click="hidePopup">X</button>
       <RegistrationForm v-show="!register" @goToLogIn="openLogInPopup" />
-      <LogInForm v-show="register" @goToRegister="openRegisterPopup" />
+      <LogInForm v-show="register" @goToRegister="openRegisterPopup" @userLoggedIn="onUserLogIn" />
     </div>
   </section>
 </template>
@@ -33,6 +33,11 @@ export default {
     },
     openLogInPopup() {
       store.dispatch("setRegister", true);
+    },
+    onUserLogIn() {
+      this.hidePopup();
+
+      this.$emit("userLoggedIn");
     }
   },
   mounted() {
