@@ -1,25 +1,35 @@
 <template>
   <section id="user-popup">
     <div class="background-02"></div>
-    <div class="popup" >
+    <div class="popup">
       <button class="btn-close" v-on:click="hidePopup">X</button>
-      <RegistrationForm v-show="!register" @goToLogIn="openLogInPopup" />
-      <LogInForm v-show="register" @goToRegister="openRegisterPopup" @userLoggedIn="onUserLogIn" />
+      <RegistrationForm v-show="!register" @goToLogIn="openLogInPopup" @throwError="onOpenErrorPopup" />
+      <LogInForm v-show="register" @goToRegister="openRegisterPopup" @userLoggedIn="onUserLogIn" @throwError="onOpenErrorPopup" />
     </div>
+    <ErrorPopup v-show="throwError" :code="errorCode" :message="errorMessage" @closeErrorPopup="onCloseErrorPopup" />
   </section>
 </template>
 
 <script>
 import RegistrationForm from "@/components/RegistrationForm.vue";
 import LogInForm from "@/components/LogInForm.vue";
+import ErrorPopup from "@/components/ErrorPopup.vue";
 import { mapState } from "vuex";
 import store from "@/store.js";
 
 export default {
   name: "UserPopup",
+  data: function() {
+    return {
+      throwError: false,
+      errorCode: "ERROR CODE",
+      errorMessage: "ERROR MESSAGE"
+    };
+  },
   components: {
     RegistrationForm,
-    LogInForm
+    LogInForm,
+    ErrorPopup
   },
   computed: {
     ...mapState(["register"])
@@ -38,12 +48,21 @@ export default {
       this.hidePopup();
 
       this.$emit("userLoggedIn");
+    },
+    onOpenErrorPopup(code, message) {
+      this.errorCode = code;
+      this.errorMessage = message;
+
+      this.throwError = true;
+    },
+    onCloseErrorPopup() {
+      this.throwError = false;
     }
   },
   mounted() {
     this.hidePopup();
   }
-}
+};
 </script>
 
 <style>
@@ -68,7 +87,8 @@ export default {
   height: 100vh;
 }
 
-.popup, .popup * {
+.popup,
+.popup * {
   z-index: var(--popup-layer) !important;
 }
 
@@ -81,7 +101,7 @@ export default {
   position: absolute;
   right: 0;
 
-  font-size: 1.5em; 
+  font-size: 1.5em;
   font-weight: bold;
   text-align: center;
   text-shadow: var(--shadow);
@@ -107,7 +127,11 @@ export default {
   font-size: 1.5em;
   font-weight: bold;
 
-  background-image: linear-gradient(to bottom right, var(--sec-color), var(--main-color));
+  background-image: linear-gradient(
+    to bottom right,
+    var(--sec-color),
+    var(--main-color)
+  );
 }
 
 .form-section {
@@ -163,11 +187,12 @@ export default {
   border-width: 0;
 }
 
-.form-footer a:focus, .form-footer a:active {
+.form-footer a:focus,
+.form-footer a:active {
   color: var(--main-color);
 }
 
-form {
+#user-popup form {
   position: fixed;
   top: 50%;
 
@@ -176,7 +201,11 @@ form {
   font-size: 1.25em;
   text-align: center;
   align-self: center;
-  background-image: linear-gradient(to bottom right, whitesmoke, rgb(200, 200, 200));
+  background-image: linear-gradient(
+    to bottom right,
+    whitesmoke,
+    rgb(200, 200, 200)
+  );
   box-shadow: var(--shadow);
 
   border-style: solid;
@@ -185,16 +214,17 @@ form {
   border-color: var(--sec-color);
 }
 
-form, form * {
+#user-popup form,
+#user-popup form * {
   font-family: "Roboto Condensed", sans-serif;
 }
 
-form button {
+#user-popup form button {
   display: inline-block;
   width: auto;
   margin-bottom: 0.65em;
   padding: 0.25em;
-  
+
   font-size: 1.25em;
   font-weight: bold;
   text-align: center;
@@ -215,7 +245,7 @@ form button {
   border-color: var(--sec-color);
 }
 
-label {
+#user-popup label {
   display: inline-block;
   width: 100%;
 
@@ -225,16 +255,20 @@ label {
   color: var(--title-color);
 }
 
-hr {
+#user-popup hr {
   border-color: var(--main-color);
   border-style: solid;
   border-width: 0.05em;
 }
 
-fieldset {
+#user-popup fieldset {
   margin: 0.5em;
-  
-  background-image: linear-gradient(to bottom right, var(--third-color), #050505);
+
+  background-image: linear-gradient(
+    to bottom right,
+    var(--third-color),
+    #050505
+  );
   box-shadow: var(--shadow);
 
   border-color: var(--sec-color);
@@ -242,18 +276,18 @@ fieldset {
   border-width: 0.15em;
 }
 
-fieldset:first-of-type {
+#user-popup fieldset:first-of-type {
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
 
-fieldset:last-of-type {
+#user-popup fieldset:last-of-type {
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
-@media screen and (orientation: portrait) { 
-  form {
+@media screen and (orientation: portrait) {
+  #user-popup form {
     width: 80vw;
     right: 10vw;
     left: 10vw;
@@ -261,7 +295,7 @@ fieldset:last-of-type {
 }
 
 @media screen and (orientation: landscape) {
-  form {
+  #user-popup form {
     width: 85vw;
     right: 7.5vw;
     left: 7.5vw;

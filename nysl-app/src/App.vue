@@ -57,6 +57,7 @@ export default {
   --nav-layer: 5;
   --map-layer: 6;
   --popup-layer: 7;
+  --error-layer: 8;
 
   --spacer: 55px;
 }

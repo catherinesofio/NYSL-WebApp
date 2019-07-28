@@ -22,7 +22,8 @@ export default new Vuex.Store({
     locations: dataLocations.data,
     teams: dataTeams.data,
     register: false,
-    user: null
+    user: null,
+    defaultUserImage: "https://e3.365dm.com/18/09/512x512/skynews-lady-gaga-a-star-is-born_4436181.jpg"
   },
   mutations: {
     SET_EVENT_DATA (state, { event, title }) {
@@ -63,6 +64,12 @@ export default new Vuex.Store({
   getters: {
     getTeam: (state) => (id) => {
       return state.teams[id];
+    },
+    getUserName: (state) => (id) => {
+      return "user " + id;
+    },
+    getUserImageURL: (state) => (id) => {
+      return state.defaultUserImage;
     }
   }
 });

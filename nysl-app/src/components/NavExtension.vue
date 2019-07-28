@@ -1,11 +1,13 @@
 <template>
   <section class="extension">
     <a id="user" class="user-ignore" v-on:click="expand">
-      <img v-show="!loggedIn"
+      <img
+        v-show="!loggedIn"
         class="user-ignore img-overlay"
         src="https://iisy.fi/wp-content/uploads/2018/12/silhouette_man.jpg"
       />
-      <img v-show="loggedIn"
+      <img
+        v-show="loggedIn"
         class="user-ignore"
         src="https://vignette.wikia.nocookie.net/shingeki-no-kyojin/images/e/ea/Eren_Jaeger_-_Anime.png/revision/latest?cb=20190429004402&path-prefix=es"
       />
@@ -13,7 +15,7 @@
     <div>
       <ul v-show="!loggedIn && expanded">
         <li>
-          <a v-on:click="openPopup(true)">
+          <a v-on:click="openPopup(false)">
             <img
               class="user-ignore"
               src="https://image.freepik.com/free-icon/plus-symbol-circle-add-button_318-9891.jpg"
@@ -21,7 +23,7 @@
           </a>
         </li>
         <li>
-          <a v-on:click="openPopup(false)">
+          <a v-on:click="openPopup(true)">
             <img
               class="user-ignore"
               src="data:image/png;base64,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"
@@ -50,14 +52,14 @@
         </li>
       </ul>
     </div>
-    <UserPopup @userLoggedIn="onUserLogIn"/>
+    <UserPopup @userLoggedIn="onUserLogIn" />
   </section>
 </template>
 
 <script>
 import UserPopup from "@/components/UserPopup.vue";
 import store from "@/store.js";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
   name: "NavExtension",
@@ -91,7 +93,7 @@ export default {
     ...mapState(["user"])
   },
   created() {
-    this.loggedIn = (this.user != null) ? true : false;
+    this.loggedIn = this.user != null ? true : false;
   },
   mounted() {
     let user = document.getElementById("user");
@@ -178,7 +180,8 @@ export default {
   border-radius: 100px;
 }
 
-.extension li a img, .img-overlay {
+.extension li a img,
+.img-overlay {
   padding: 0;
 
   mix-blend-mode: overlay;

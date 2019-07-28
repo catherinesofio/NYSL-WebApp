@@ -29,11 +29,13 @@
         </li>
       </ul>
     </div>
+    <CommentSection />
     <Map v-bind:url="locationMap" />
   </section>
 </template>
 
 <script>
+import CommentSection from "@/components/CommentSection.vue";
 import Map from "@/components/Map.vue";
 import { mapState } from "vuex";
 import store from "@/store.js";
@@ -46,6 +48,7 @@ export default {
     };
   },
   components: {
+    CommentSection,
     Map
   },
   methods: {

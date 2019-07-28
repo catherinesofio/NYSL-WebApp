@@ -3,13 +3,18 @@
     <label class="form-title">CREATE AN ACCOUNT</label>
     <fieldset>
       <div class="form-section">
+        <label>NAME</label>
+        <input type="text" placeholder=" Enter name" minlength="3" maxlength="10" required v-model="name" />
+      </div>
+      <hr />
+      <div class="form-section">
         <label>E-MAIL</label>
         <input type="text" placeholder=" Enter e-mail" required v-model="email" />
       </div>
       <hr />
       <div class="form-section">
         <label>PASSWORD</label>
-        <input type="password" placeholder=" Enter password" required v-model="password" />
+        <input type="password" placeholder=" Enter password" minlength="6" required v-model="password" />
       </div>
       <hr />
       <div class="form-section">
@@ -26,18 +31,24 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import router from "@/router.js";
 
 export default {
   data: function() {
     return {
+      name: "",
       email: "",
       password: "",
       confirmPassword: ""
     };
   },
+  computed: {
+    ...mapState[("defaultUserImage")]
+  },
   methods: {
     reset() {
+      this.name = "";
       this.email = "";
       this.password = "";
       this.confirmPassword = "";
@@ -51,11 +62,16 @@ export default {
       e.preventDefault();
 
       let obj = this;
+      let name = this.name;
+      let imgURL = this.defaultUserImage;
 
       if (this.password === this.confirmPassword) {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
+          .then(function(user) {
+            user.updateProfile( { displayName: name, photoURL: imgURL } );
+          })
           .then(function() {
             obj.swich();
           })
