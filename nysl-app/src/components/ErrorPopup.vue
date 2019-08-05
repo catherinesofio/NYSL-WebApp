@@ -12,7 +12,7 @@
 <script>
 export default {
   name: "ErrorPopup",
-  props: [ "code", "message" ],
+  props: ["code", "message"],
   methods: {
     onClose() {
       this.$emit("closeErrorPopup");
@@ -22,7 +22,9 @@ export default {
 </script>
 
 <style>
-#error-popup, .error, .error * {
+#error-popup,
+.error,
+.error * {
   z-index: var(--error-layer) !important;
 }
 
@@ -32,10 +34,10 @@ export default {
 
 #error-popup {
   position: fixed;
-  top:0;
+  top: 0;
 }
 
-.error { 
+.error {
   width: 75vw;
   padding: 0;
   position: fixed;

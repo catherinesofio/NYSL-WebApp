@@ -9,8 +9,9 @@
       <img
         v-show="loggedIn"
         class="user-ignore"
-        src="https://vignette.wikia.nocookie.net/shingeki-no-kyojin/images/e/ea/Eren_Jaeger_-_Anime.png/revision/latest?cb=20190429004402&path-prefix=es"
+        :src="getPhotoURL"
       />
+      <span>{{ getDisplayName }}</span>
     </a>
     <div>
       <ul v-show="!loggedIn && expanded">
@@ -43,7 +44,7 @@
           </a>
         </li>
         <li>
-          <a>
+          <a v-on:click="openSettings">
             <img
               class="user-ignore"
               src="data:image/png;base64,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"
@@ -53,11 +54,13 @@
       </ul>
     </div>
     <UserPopup @userLoggedIn="onUserLogIn" />
+    <SettingsPopup v-show="loggedIn && settings" />
   </section>
 </template>
 
 <script>
 import UserPopup from "@/components/UserPopup.vue";
+import SettingsPopup from "@/components/SettingsPopup.vue";
 import store from "@/store.js";
 import { mapState } from "vuex";
 
@@ -66,11 +69,13 @@ export default {
   data: function() {
     return {
       loggedIn: false,
-      expanded: false
+      expanded: false,
+      settings: false
     };
   },
   components: {
-    UserPopup
+    UserPopup,
+    SettingsPopup
   },
   methods: {
     expand() {
@@ -81,16 +86,32 @@ export default {
       document.getElementById("user-popup").style.display = "block";
       store.dispatch("setRegister", register);
     },
-    onUserLogIn() {
+    openSettings() {
+      this.settings = true;
+      document.getElementById("settings-popup").style.display = "block";
+    },
+    closeSettings() {
+      this.settings = false;
+    },
+    onUserLogIn(userData) {
       this.loggedIn = true;
+      
+      store.dispatch("setUser", userData);
     },
     onUserLogOff() {
       this.loggedIn = false;
+
       store.dispatch("setUser", null);
     }
   },
   computed: {
-    ...mapState(["user"])
+    ...mapState(["user"]),
+    getDisplayName() {
+      return (this.user !== null) ?  this.user.name : "";
+    },
+    getPhotoURL() {
+      return (this.user !== null) ?  this.user.photoURL : "";
+    }
   },
   created() {
     this.loggedIn = this.user != null ? true : false;
@@ -215,11 +236,28 @@ export default {
 
 a img {
   width: 100%;
+  height: 100%;
   margin: auto;
   padding: 0.1em;
 
   border-radius: 100px;
 
-  object-fit: scale-down;
+  object-fit: cover;
+}
+
+a span {
+  position:absolute;
+  bottom: 0;
+  left: 50%;
+
+  width: 200%;
+
+  padding: 0;
+  margin: 0;
+
+  transform: translate(-50%, 0);
+
+  font-size: 0.75em;
+  text-align: center;
 }
 </style>

@@ -4,7 +4,7 @@
     <fieldset>
       <div class="form-section">
         <label>E-MAIL</label>
-        <input name="email" type="text" placeholder=" Enter e-mail" required v-model="email" />
+        <input name="email" type="text" placeholder=" enter e-mail" required v-model="email" />
       </div>
       <hr />
       <div class="form-section">
@@ -12,7 +12,7 @@
         <input
           name="password"
           type="password"
-          placeholder=" Enter password"
+          placeholder=" enter password"
           required
           v-model="password"
         />
@@ -50,35 +50,31 @@ export default {
       e.preventDefault();
 
       let obj = this;
+      let email = this.email;
+      let password = this.password;
 
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(function(data) {
-          let userData = data.user.providerData[0];
-          let user = {
-            displayName: userData.displayName,
-            email: userData.email,
-            photoURL: userData.photoURL
-          };
+        .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then(function() {
+          return firebase.auth().signInWithEmailAndPassword(email, password);
+        })
+        .then(function() {
+          let uid = firebase.auth().currentUser.uid;
 
-          store.dispatch("setUser", user);
-          
           obj.reset();
-          obj.$emit("userLoggedIn");
-
-          alert("Welcome back " + user.displayName + "!");
+          obj.$emit("userLoggedIn", uid);
         })
         .catch(function(error) {
           switch (error.code) {
             case "auth/invalid-email":
-              alert("Invalid e-mail.");
+              obj.$emit("throwError", "INVALID E-MAIL", "Please insert a valid e-mail address.");
               break;
             case "auth/user-not-found":
-              alert("Account does not exist.");
+              obj.$emit("throwError", "USER NOT FOUND", "There is no account associated to that e-mail address.");
               break;
             case "auth/wrong-password":
-              alert("Wrong password.");
+              obj.$emit("throwError", "WRONG PASSWORD", "Please insert the right password.");
               break;
           }
         });

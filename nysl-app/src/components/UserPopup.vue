@@ -3,7 +3,7 @@
     <div class="background-02"></div>
     <div class="popup">
       <button class="btn-close" v-on:click="hidePopup">X</button>
-      <RegistrationForm v-show="!register" @goToLogIn="openLogInPopup" @throwError="onOpenErrorPopup" />
+      <RegistrationForm v-show="!register" @goToLogIn="openLogInPopup" @userLoggedIn="onUserLogIn" @throwError="onOpenErrorPopup" />
       <LogInForm v-show="register" @goToRegister="openRegisterPopup" @userLoggedIn="onUserLogIn" @throwError="onOpenErrorPopup" />
     </div>
     <ErrorPopup v-show="throwError" :code="errorCode" :message="errorMessage" @closeErrorPopup="onCloseErrorPopup" />
@@ -44,10 +44,10 @@ export default {
     openLogInPopup() {
       store.dispatch("setRegister", true);
     },
-    onUserLogIn() {
+    onUserLogIn(userData) {
       this.hidePopup();
 
-      this.$emit("userLoggedIn");
+      this.$emit("userLoggedIn", userData);
     },
     onOpenErrorPopup(code, message) {
       this.errorCode = code;
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style>
-#user-popup {
+#user-popup, #settings {
   display: none;
 }
 
@@ -155,7 +155,6 @@ export default {
   width: 100%;
 
   font-size: 1em;
-  text-transform: lowercase;
 
   border-radius: 5px;
   border-color: var(--sec-color);
@@ -192,7 +191,7 @@ export default {
   color: var(--main-color);
 }
 
-#user-popup form {
+#user-popup form, #settings-popup form {
   position: fixed;
   top: 50%;
 
@@ -215,11 +214,11 @@ export default {
 }
 
 #user-popup form,
-#user-popup form * {
+#user-popup form *, #settings-popup, #settings-popup * {
   font-family: "Roboto Condensed", sans-serif;
 }
 
-#user-popup form button {
+#user-popup form button, #settings-popup form button {
   display: inline-block;
   width: auto;
   margin-bottom: 0.65em;
@@ -245,7 +244,7 @@ export default {
   border-color: var(--sec-color);
 }
 
-#user-popup label {
+#user-popup label, #settings-popup label {
   display: inline-block;
   width: 100%;
 
@@ -255,13 +254,13 @@ export default {
   color: var(--title-color);
 }
 
-#user-popup hr {
+#user-popup hr, #settings-popup hr {
   border-color: var(--main-color);
   border-style: solid;
   border-width: 0.05em;
 }
 
-#user-popup fieldset {
+#user-popup fieldset, #settings-popup fieldset {
   margin: 0.5em;
 
   background-image: linear-gradient(
@@ -276,18 +275,18 @@ export default {
   border-width: 0.15em;
 }
 
-#user-popup fieldset:first-of-type {
+#user-popup fieldset:first-of-type, #settings-popup fieldset:first-of-type {
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
 
-#user-popup fieldset:last-of-type {
+#user-popup fieldset:last-of-type, #settings-popup fieldset:last-of-type {
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
 @media screen and (orientation: portrait) {
-  #user-popup form {
+  #user-popup form, #settings-popup form {
     width: 80vw;
     right: 10vw;
     left: 10vw;
@@ -295,7 +294,7 @@ export default {
 }
 
 @media screen and (orientation: landscape) {
-  #user-popup form {
+  #user-popup form, #settings-popup form {
     width: 85vw;
     right: 7.5vw;
     left: 7.5vw;

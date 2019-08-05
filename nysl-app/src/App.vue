@@ -13,6 +13,7 @@
 import Nav from "@/components/Nav.vue";
 import NavExtension from "@/components/NavExtension.vue";
 import Spacer from "@/components/Spacer.vue";
+import store from "@/store.js";
 
 export default {
   name: "app",
@@ -20,6 +21,10 @@ export default {
     Nav,
     NavExtension,
     Spacer
+  },
+  created() {
+    store.dispatch("loadPosts");
+    store.dispatch("loadUsers");
   }
 };
 </script>

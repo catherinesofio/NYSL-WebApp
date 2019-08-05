@@ -4,17 +4,17 @@
     <fieldset>
       <div class="form-section">
         <label>NAME</label>
-        <input type="text" placeholder=" Enter name" minlength="3" maxlength="10" required v-model="name" />
+        <input type="text" placeholder=" enter name" minlength="3" maxlength="10" required v-model="name" />
       </div>
       <hr />
       <div class="form-section">
         <label>E-MAIL</label>
-        <input type="text" placeholder=" Enter e-mail" required v-model="email" />
+        <input type="text" placeholder=" enter e-mail" required v-model="email" />
       </div>
       <hr />
       <div class="form-section">
         <label>PASSWORD</label>
-        <input type="password" placeholder=" Enter password" minlength="6" required v-model="password" />
+        <input type="password" placeholder=" enter password" minlength="6" required v-model="password" />
       </div>
       <hr />
       <div class="form-section">
@@ -64,32 +64,44 @@ export default {
       let obj = this;
       let name = this.name;
       let imgURL = this.defaultUserImage;
+      let email = this.email;
+      let password = this.password;
 
-      if (this.password === this.confirmPassword) {
+      if (name == "") {
+        obj.$emit("throwError", "EMPTY NAME", "Please insert a display name.");
+      }
+      else if (name.length < 3) {
+        obj.$emit("throwError", "NAME TOO SHORT", "Display name must be at least 3 characters long.");
+      }
+      else if (this.password === this.confirmPassword) {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
-          .then(function(user) {
-            user.updateProfile( { displayName: name, photoURL: imgURL } );
-          })
           .then(function() {
-            obj.swich();
+            firebase.auth().currentUser.updateProfile( { displayName: name, photoURL: imgURL } );
+            
+            firebase.auth().signInWithEmailAndPassword(email, password);
+            
+            let userData = firebase.auth().currentUser.providerData[0];
+
+            obj.reset();
+            obj.$emit("userLoggedIn", userData);
           })
           .catch(function(error) {
             switch (error.code) {
-              case "auth/email-already-in-use":
-                alert("E-mail already registered.");
-                break;
-              case "auth/invalid-email":
-                alert("Invalid e-mail.");
-                break;
-              case "auth/weak-password":
-                alert("Your password must at least be 6 characters long.");
-                break;
+            case "auth/invalid-email":
+              obj.$emit("throwError", "INVALID E-MAIL", "Please insert a valid e-mail address.");
+              break;
+            case "auth/email-already-in-use":
+              obj.$emit("throwError", "USER NOT FOUND", "There is already an account associated to that e-mail address.");
+              break;
+            case "auth/weak-password":
+              obj.$emit("throwError", "WEAK PASSWORD", "Your password must at least be 6 characters long.");
+              break;
             }
           });
       } else {
-        alert("Passwords do not match.");
+        obj.$emit("throwError", "PASSWORDS", "Passwords do not match.");
       }
     }
   }

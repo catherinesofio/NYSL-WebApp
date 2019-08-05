@@ -23,7 +23,9 @@ export default new Vuex.Store({
     teams: dataTeams.data,
     register: false,
     user: null,
-    defaultUserImage: "https://e3.365dm.com/18/09/512x512/skynews-lady-gaga-a-star-is-born_4436181.jpg"
+    defaultUserImage: "https://e3.365dm.com/18/09/512x512/skynews-lady-gaga-a-star-is-born_4436181.jpg",
+    posts: null,
+    users: null
   },
   mutations: {
     SET_EVENT_DATA (state, { event, title }) {
@@ -41,7 +43,38 @@ export default new Vuex.Store({
       state.register = register;
     },
     SET_USER (state, user) {
-      state.user = user;
+      if (user != null) {
+        let temp = state.users[user];
+        
+        state.user = {
+          id: user,
+          name: temp.name,
+          photoURL: temp.photoURL
+        };
+      } else {
+        state.user = null;
+      }
+    },
+    SET_POSTS (state, posts) {
+      state.posts = posts;
+    },
+    SET_USERS (state, users) {
+      state.users = users;
+    },
+    RELOAD_USERS (state, data) {
+      state.users = data.users;
+      
+      if (data.user_id != null) {
+        let temp = state.users[data.user_id];
+        
+        state.user = {
+          id: user,
+          name: temp.name,
+          photoURL: temp.photoURL
+        };
+      } else {
+        state.user = null;
+      }
     }
   },
   actions: {
@@ -59,6 +92,27 @@ export default new Vuex.Store({
     },
     setUser (context, user) {
       context.commit("SET_USER", user);
+    },
+    loadPosts (context) {
+      firebase.database()
+      .ref('posts/')
+      .on('value', function(snapshot) {
+        context.commit("SET_POSTS", snapshot.val());
+      });
+    },
+    loadUsers (context) {
+      firebase.database()
+      .ref('users/')
+      .on('value', function(snapshot) {
+        context.commit("SET_USERS", snapshot.val());
+      });
+    },
+    reloadUsers (context, user) {
+      firebase.database()
+      .ref('users/')
+      .on('value', function(snapshot) {
+        context.commit("RELOAD_USERS", { users: snapshot.val(), user_id: user });
+      });
     }
   },
   getters: {

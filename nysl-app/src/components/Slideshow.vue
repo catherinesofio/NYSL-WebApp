@@ -95,4 +95,8 @@ function ClearTimeout() {
   overflow: hidden !important;
   overflow-y: hidden;
 }
+
+#slideshow img {
+  filter: blur(2.25px) saturate(125%);
+}
 </style>
