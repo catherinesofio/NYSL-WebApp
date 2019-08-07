@@ -22,7 +22,7 @@
         <input type="password" placeholder=" confirm password" required v-model="confirmPassword" />
       </div>
     </fieldset>
-    <button type="submit" v-on:click="onRegister">REGISTER</button>
+    <button type="button" v-on:click="onRegister">REGISTER</button>
     <label class="form-footer">
       Already have an account?
       <a v-on:click="swich">log in</a>
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import router from "@/router.js";
 
 export default {
@@ -42,9 +41,6 @@ export default {
       password: "",
       confirmPassword: ""
     };
-  },
-  computed: {
-    ...mapState[("defaultUserImage")]
   },
   methods: {
     reset() {
@@ -62,15 +58,15 @@ export default {
       e.preventDefault();
 
       let obj = this;
-      let name = this.name;
-      let imgURL = this.defaultUserImage;
+      let username = this.name;
+      let imgURL = "https://pngimage.net/wp-content/uploads/2018/05/default-user-png-2.png";
       let email = this.email;
       let password = this.password;
 
-      if (name == "") {
+      if (username == "") {
         obj.$emit("throwError", "EMPTY NAME", "Please insert a display name.");
       }
-      else if (name.length < 3) {
+      else if (username.length < 3) {
         obj.$emit("throwError", "NAME TOO SHORT", "Display name must be at least 3 characters long.");
       }
       else if (this.password === this.confirmPassword) {
@@ -78,14 +74,19 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(function() {
-            firebase.auth().currentUser.updateProfile( { displayName: name, photoURL: imgURL } );
-            
-            firebase.auth().signInWithEmailAndPassword(email, password);
-            
-            let userData = firebase.auth().currentUser.providerData[0];
+            firebase.auth().signInWithEmailAndPassword(email, password).then(function () {
+              let uid = firebase.auth().currentUser.uid;
+              let data = { 
+                name: username, 
+                photoURL: imgURL 
+              };
+              
+              firebase.database().ref("users/").child(uid).set(data).then(function() {
+                obj.$emit("userLoggedIn", uid);
+              });
+            });
 
             obj.reset();
-            obj.$emit("userLoggedIn", userData);
           })
           .catch(function(error) {
             switch (error.code) {

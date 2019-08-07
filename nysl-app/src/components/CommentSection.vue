@@ -22,6 +22,7 @@
 <script>
 import Comment from "@/components/Comment.vue";
 import CommentForm from "@/components/CommentForm.vue";
+import store from "@/store.js";
 
 export default {
   name: "CommentSection",

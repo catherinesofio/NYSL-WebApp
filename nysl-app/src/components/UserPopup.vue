@@ -44,10 +44,10 @@ export default {
     openLogInPopup() {
       store.dispatch("setRegister", true);
     },
-    onUserLogIn(userData) {
+    onUserLogIn(user) {
       this.hidePopup();
 
-      this.$emit("userLoggedIn", userData);
+      this.$emit("userLoggedIn", user);
     },
     onOpenErrorPopup(code, message) {
       this.errorCode = code;

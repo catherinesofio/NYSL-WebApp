@@ -18,7 +18,7 @@
         />
       </div>
     </fieldset>
-    <button type="submit" v-on:click="onLogIn">LOG IN</button>
+    <button type="button" v-on:click="onLogIn">LOG IN</button>
     <label class="form-footer">
       Don't have an account?
       <a v-on:click="swich">register</a>

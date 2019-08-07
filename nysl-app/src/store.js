@@ -23,7 +23,6 @@ export default new Vuex.Store({
     teams: dataTeams.data,
     register: false,
     user: null,
-    defaultUserImage: "https://e3.365dm.com/18/09/512x512/skynews-lady-gaga-a-star-is-born_4436181.jpg",
     posts: null,
     users: null
   },
@@ -64,11 +63,11 @@ export default new Vuex.Store({
     RELOAD_USERS (state, data) {
       state.users = data.users;
       
-      if (data.user_id != null) {
-        let temp = state.users[data.user_id];
+      if (data.uid != null) {
+        let temp = state.users[data.uid];
         
         state.user = {
-          id: user,
+          id: data.uid,
           name: temp.name,
           photoURL: temp.photoURL
         };
@@ -111,19 +110,13 @@ export default new Vuex.Store({
       firebase.database()
       .ref('users/')
       .on('value', function(snapshot) {
-        context.commit("RELOAD_USERS", { users: snapshot.val(), user_id: user });
+        context.commit("RELOAD_USERS", { users: snapshot.val(), uid: user });
       });
-    }
-  },
-  getters: {
-    getTeam: (state) => (id) => {
-      return state.teams[id];
     },
-    getUserName: (state) => (id) => {
-      return "user " + id;
-    },
-    getUserImageURL: (state) => (id) => {
-      return state.defaultUserImage;
+    updateUser (context, user) {
+      if (user != null) {
+        context.commit("SET_USER", user.uid);
+      }
     }
   }
 });

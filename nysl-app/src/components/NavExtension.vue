@@ -88,17 +88,19 @@ export default {
     },
     openSettings() {
       this.settings = true;
+
       document.getElementById("settings-popup").style.display = "block";
     },
     closeSettings() {
       this.settings = false;
     },
-    onUserLogIn(userData) {
+    onUserLogIn(user) {
       this.loggedIn = true;
       
-      store.dispatch("setUser", userData);
+      store.dispatch("setUser", user);
     },
     onUserLogOff() {
+      this.settings = false;
       this.loggedIn = false;
 
       store.dispatch("setUser", null);
