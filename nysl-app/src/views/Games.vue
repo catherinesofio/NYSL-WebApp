@@ -216,12 +216,19 @@ h2 {
   z-index: var(--middle-layer);
 }
 
-#map {
+#event #map {
+  margin-top: var(--spacer);
   width: 100vw;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
+}
+
+#event #map iframe {
+  margin-left: 50%;
+  margin-right: 50%;
+  transform: translateX(-50%);
 }
 
 @media screen and (orientation: portrait) {
@@ -269,8 +276,9 @@ h2 {
     overflow-y: scroll !important;
   }
 
-  nav {
-    z-index: 0 !important;
+  #event #map iframe {
+    margin-top: 10%;
+    margin-bottom: 10%;
   }
 }
 
@@ -325,8 +333,9 @@ h2 {
     position: none;
   }
 
-  nav {
-    z-index: 0 !important;
+  #event #map iframe {
+    margin-top: 3%;
+    margin-bottom: 3%;
   }
 }
 </style>

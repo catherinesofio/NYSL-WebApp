@@ -76,8 +76,4 @@ export default {
 .info-container:nth-child(even) .btn-map {
   left: 0;
 }
-
-nav { 
-  z-index: var(--nav-layer) !important;
-}
 </style>

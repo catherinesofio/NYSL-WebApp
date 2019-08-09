@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="background portrait"></div>
+    <div class="background-03 portrait"></div>
     <div class="container">
       <div id="event-top" class="container-full">
         <div class="container-title">
@@ -142,6 +142,19 @@ export default {
 </script>
 
 <style>
+.background-03 {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: var(--spacer);
+  
+  background-color: var(--third-color);
+
+  opacity: 0.75;
+
+  z-index: var(--back-layer)!important;
+}
+
 .container, .container * {
   z-index: var(--middle-layer)!important;
 }

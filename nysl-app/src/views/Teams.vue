@@ -26,9 +26,3 @@ export default {
   }
 };
 </script>
-
-<style>
-nav { 
-  z-index: var(--nav-layer) !important;
-}
-</style>

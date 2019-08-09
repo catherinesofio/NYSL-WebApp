@@ -66,6 +66,7 @@ export default {
   --error-layer: 9;
 
   --spacer: 55px;
+  --spacer-half: 24.5px;
 }
 
 * {
@@ -206,5 +207,11 @@ img {
     var(--third-color),
     rgba(34, 139, 34, 0)
   );
+}
+
+@media screen and (orientation: portrait) {
+}
+
+@media screen and (orientation: landscape) {
 }
 </style>
