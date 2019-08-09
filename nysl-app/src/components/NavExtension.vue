@@ -1,6 +1,6 @@
 <template>
   <section class="extension">
-    <a id="user" class="user-ignore" v-on:click="expand">
+    <a id="user" v-show="show" class="user-ignore" v-on:click="expand">
       <img
         v-show="!loggedIn"
         class="user-ignore img-overlay"
@@ -13,6 +13,8 @@
       />
       <span>{{ getDisplayName }}</span>
     </a>
+    <a class="user-show" v-show="show" v-on:click="showUserExtension(false)">◢</a>
+    <a class="user-show" v-show="!show" v-on:click="showUserExtension(true)">◤</a>
     <div>
       <ul v-show="!loggedIn && expanded">
         <li>
@@ -70,7 +72,8 @@ export default {
     return {
       loggedIn: false,
       expanded: false,
-      settings: false
+      settings: false,
+      show: true
     };
   },
   components: {
@@ -104,6 +107,9 @@ export default {
       this.loggedIn = false;
 
       store.dispatch("setUser", null);
+    },
+    showUserExtension(show) {
+      this.show = show;
     }
   },
   computed: {
@@ -261,5 +267,32 @@ a span {
 
   font-size: 0.75em;
   text-align: center;
+}
+
+.user-show {
+  width: 1.25em;
+  height: 1.25em;
+
+  position: fixed;
+  bottom: 2px;
+  right: 2px;
+
+  padding: 0;
+  margin: 0;
+
+  font-size: 1.5em;
+  text-shadow: var(--shadow);
+
+  color: var(--sec-color);
+
+  background-color: rgba(0, 0, 0, 0);
+  background-image: none;
+  box-shadow: none;
+
+  border-width: 0;
+
+  opacity: 0.65;
+
+  z-index: var(--map-layer) !important;
 }
 </style>

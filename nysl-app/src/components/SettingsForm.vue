@@ -49,7 +49,7 @@ export default {
       let file = document.getElementById("photo-file");
       let uid = this.user.id;
       let database = firebase.database().ref("users/" + uid);
-      let firestore = firebase.storage().ref("users/");
+      //let firestore = firebase.storage().ref("users/");
       let reset = this.reset;
 
       if (this.displayName == "" && file.files.length == 0) {

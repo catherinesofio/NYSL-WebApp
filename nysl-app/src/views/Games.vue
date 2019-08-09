@@ -42,7 +42,7 @@ export default {
     },
     getTitle: function(e) {
       return (
-        this.teams[e.team_a_id].title + " vs " + this.teams[e.team_b_id].title
+        (this.teams[e.team_a_id].title) + " vs " + (this.teams[e.team_b_id].title)
       );
     },
     getMatchType: function(e) {
@@ -50,16 +50,8 @@ export default {
 
       return this.icons[icon] + " " + this.types[icon];
     },
-    getDatetime: function(e) {
-      let date = e.date;
-      let time = e.time;
-
-      return new Date(date.year, date.month, date.day, time.hour, time.minutes);
-    },
     getDate: function(e) {
-      let date = this.getDatetime(e);
-
-      return date.toLocaleDateString();
+      return e.datetime.toLocaleDateString();
     },
     getLocation: function(id) {
       return this.locations[id].title;
@@ -190,6 +182,8 @@ h2 {
   width: 100vw;
   height: 100vh;
 
+  position:relative;
+
   overflow-x: hidden;
   overflow-y: visible;
 }
@@ -206,7 +200,7 @@ h2 {
 
 .background {
   width: 100vw;
-  height: 100vh;
+  height: 100vh !important;
   position: fixed;
   top: var(--spacer);
   right: 0;
@@ -214,10 +208,11 @@ h2 {
   background-color: var(--third-color);
 
   z-index: var(--back-layer)!important;
+
+  overflow: visible;
 }
 
-#event,
-#event * {
+#event, #event * {
   z-index: var(--middle-layer);
 }
 
@@ -232,14 +227,20 @@ h2 {
 @media screen and (orientation: portrait) {
   .portrait {
     display: block;
+    position: fixed;
   }
 
   .landscape {
     display: none;
+    position: fixed;
   }
 
   .row {
     display: block;
+  }
+
+  .column {
+    overflow-y: scroll !important;
   }
 
   .column-left,
@@ -257,24 +258,31 @@ h2 {
   }
 
   #event {
-    min-height: 100vh;
+    max-height: 100vh;
     margin: 0;
     margin-top: var(--spacer);
+    padding-bottom: var(--spacer);
     position: fixed;
     top: 0;
-
+    
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: scroll !important;
+  }
+
+  nav {
+    z-index: 0 !important;
   }
 }
 
 @media screen and (orientation: landscape) {
   .portrait {
     display: none;
+    position: fixed;
   }
 
   .landscape {
     display: flex;
+    position: fixed;
   }
 
   .row {
@@ -315,6 +323,10 @@ h2 {
   #event {
     display: flex;
     position: none;
+  }
+
+  nav {
+    z-index: 0 !important;
   }
 }
 </style>

@@ -14,7 +14,16 @@ export default new Vuex.Store({
     showPath: false,
     showPopup: false,
     eventData: {
-      event: dataGames.data[0],
+      event: {
+        "id": -1,
+        "team_a_id": 1,
+        "team_b_id": 3,
+        "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.",
+        "datetime": new Date(0),
+        "icon": 0,
+        "location_id": 0,
+        "is_scheduled": false
+    },
       title: (dataGames.data[0].icon === 0) ? "FRIENDLY MATCH" : "CHAMPIONSHIP"
     },
     slideshow: dataSlideshow.data,
@@ -74,6 +83,22 @@ export default new Vuex.Store({
       } else {
         state.user = null;
       }
+    },
+    SET_GAMES (state, data) {
+      state.games = data.map(function (x) {
+        let date = x.date;
+        let time = x.time;
+
+        return {
+          id: x.id,
+          team_a_id: x.team_a_id,
+          team_b_id: x.team_b_id,
+          location_id: x.location_id,
+          description: x.description,
+          datetime: new Date(date.year, date.month, date.day, time.hour, time.minutes),
+          icon: x.icon
+        };
+      }).sort((a, b) => { return (a.datetime > b.datetime) ? 1 : -1; });
     }
   },
   actions: {
@@ -117,6 +142,9 @@ export default new Vuex.Store({
       if (user != null) {
         context.commit("SET_USER", user.uid);
       }
+    },
+    setGames(context) { 
+      context.commit("SET_GAMES", dataGames.data);
     }
   }
 });

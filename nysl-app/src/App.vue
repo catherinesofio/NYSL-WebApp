@@ -23,6 +23,7 @@ export default {
     Spacer
   },
   created() {
+    store.dispatch("setGames");
     store.dispatch("loadPosts");
     store.dispatch("loadUsers");
   }
@@ -54,15 +55,15 @@ export default {
   --sec-color: yellowgreen;
   --third-color: #202020;
 
-  --slideshow-layer: 0;
-  --base-layer: 1;
-  --back-layer: 2;
-  --middle-layer: 3;
-  --top-layer: 4;
-  --nav-layer: 5;
-  --map-layer: 6;
-  --popup-layer: 7;
-  --error-layer: 8;
+  --slideshow-layer: -1;
+  --base-layer: 0;
+  --back-layer: 1;
+  --middle-layer: 2;
+  --top-layer: 3;
+  --nav-layer: 4;
+  --map-layer: 7;
+  --popup-layer: 8;
+  --error-layer: 9;
 
   --spacer: 55px;
 }

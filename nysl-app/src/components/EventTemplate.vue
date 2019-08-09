@@ -29,7 +29,7 @@
         </li>
       </ul>
     </div>
-    <CommentSection />
+    <CommentSection :event_id="getID" />
     <Map v-bind:url="locationMap" />
   </section>
 </template>
@@ -111,14 +111,10 @@ export default {
       return this.getLocation().map_url;
     },
     time() {
-      let date = this.getDatetime();
-
-      return this.icons[2] + " " + date.toLocaleTimeString();
+      return this.icons[2] + " " + this.getEvent().datetime.toLocaleTimeString();
     },
     date() {
-      let date = this.getDatetime();
-
-      return this.icons[3] + " " + date.toLocaleDateString();
+      return this.icons[3] + " " + this.getEvent().datetime.toLocaleDateString();
     },
     locationAddress() {
       return this.icons[4] + " " + this.getLocation().address;
@@ -131,6 +127,9 @@ export default {
         " vs " +
         this.getTeamMascot(event.team_b_id)
       );
+    },
+    getID() {
+      return this.getEvent().id;
     }
   },
   created() {
@@ -151,6 +150,8 @@ export default {
   display: flex;
   flex-wrap: nowrap;
 
+  position: relative;
+
   width: 100vw;
   min-height: 1px;
 
@@ -163,6 +164,8 @@ export default {
 .container-half,
 .container-full {
   height: 100%;
+
+  position: relative;
 
   padding: 1em;
 
@@ -235,6 +238,8 @@ export default {
   flex-wrap: nowrap;
   width: 100%;
   padding: 1em;
+
+  position: relative;
 
   text-align: left;
 

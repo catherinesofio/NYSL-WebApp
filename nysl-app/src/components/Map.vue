@@ -33,7 +33,7 @@ export default {
 }
 
 .map-container {
-  position: relative;
+  position: fixed;
 
   background-color: rgba(32, 32, 32, 0.85);
 }

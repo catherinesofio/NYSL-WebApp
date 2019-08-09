@@ -72,4 +72,8 @@ export default {
 ul {
   overflow: visible;
 }
+
+nav { 
+  z-index: var(--nav-layer) !important;
+}
 </style>
